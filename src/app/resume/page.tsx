@@ -2,7 +2,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  HiDownload,
   HiAcademicCap,
   HiBriefcase,
   HiCode,
@@ -10,13 +9,8 @@ import {
   HiStar,
   HiBadgeCheck,
 } from "react-icons/hi";
-import {
-  FiGithub,
-  FiLinkedin,
-  FiMail,
-  FiPhone,
-  FiMapPin,
-} from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail, FiPhone } from "react-icons/fi";
+import ResumeDownloader from "./resumeDownloader";
 
 // ── Sections Configuration ──
 const sections = [
@@ -153,7 +147,7 @@ export default function Resume() {
   }, []);
 
   // ── Print / PDF ──
-  const handlePrint = () => window.print();
+  // const handlePrint = () => window.print();
 
   // ── Scroll to section ──
   const scrollToSection = (id: string) => {
@@ -261,8 +255,7 @@ export default function Resume() {
                   01717680772
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <FiMapPin size={14} />
-                  Bogura, Bangladesh
+                  📍 Bogura, Bangladesh
                 </span>
               </div>
               <div className="flex items-center gap-4 mt-4">
@@ -289,13 +282,7 @@ export default function Resume() {
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <button
-                onClick={handlePrint}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/25 hover:shadow-purple-600/30 transition-all duration-300"
-              >
-                <HiDownload size={18} />
-                Download PDF
-              </button>
+              <ResumeDownloader />
             </div>
           </div>
         </motion.div>
