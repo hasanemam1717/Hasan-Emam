@@ -1,10 +1,11 @@
 import ContactCard from "@/components/ContactCard";
-import React from "react";
+import ScheduleCall from "@/components/ScheduleCall";
 
 const ContactPage = () => {
   return (
     <div>
-      <ContactCard></ContactCard>
+      <ContactCard />
+      <ScheduleCall />
     </div>
   );
 };

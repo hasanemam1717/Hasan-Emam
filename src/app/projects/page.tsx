@@ -3,7 +3,7 @@ import ProjectCard from "@/components/ProjectCard";
 const Projects = () => {
   return (
     <div>
-      <ProjectCard></ProjectCard>
+      <ProjectCard />
     </div>
   );
 };
