@@ -11,6 +11,7 @@ import {
   HiUserGroup,
 } from "react-icons/hi";
 import { FiSend, FiUser, FiMessageSquare } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 const benefits = [
   {
@@ -59,13 +60,30 @@ const Contact = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    // Simulate sending
-    await new Promise((r) => setTimeout(r, 1200));
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    console.log("Form Data:", formData);
-    alert("Thank you for your message! I'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
-    setSubmitting(false);
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      toast.success("Message sent successfully! I'll get back to you soon.");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err: unknown) {
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : "Failed to send message. Please try again later.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -223,7 +241,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    placeholder="John Doe"
+                    placeholder="Write your name..."
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
                   />
                 </div>
@@ -241,7 +259,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    placeholder="john@example.com"
+                    placeholder="Enter your email..."
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
                   />
                 </div>

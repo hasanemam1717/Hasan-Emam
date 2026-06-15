@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +18,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Emam's | Portfolio",
-  description: "Showing this skill set a creative web developer.",
+  title: "Hasan Emam | Full-Stack Web Developer",
+  description:
+    "Full-stack web developer specializing in React, Next.js, TypeScript, and Node.js. Explore my portfolio, projects, and skills.",
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -31,6 +37,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "#0a0a23",
+              color: "#fff",
+              border: "1px solid rgba(255,255,255,0.1)",
+            },
+            success: {
+              iconTheme: { primary: "#22d3ee", secondary: "#0a0a23" },
+            },
+            error: {
+              iconTheme: { primary: "#f87171", secondary: "#0a0a23" },
+            },
+          }}
+        />
         <ThemeProvider>
           <Navbar />
           <div className="h-full">{children}</div>

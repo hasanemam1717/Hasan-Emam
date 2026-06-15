@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { HiMail, HiUser, HiChat } from "react-icons/hi";
 import { FiSend } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 const ContactCard = () => {
   const [formData, setFormData] = useState({
@@ -26,15 +27,35 @@ const ContactCard = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    // Simulate sending
-    await new Promise((r) => setTimeout(r, 1000));
-    console.log("Form Data:", formData);
-    setSending(false);
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 3000);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setSending(false);
+      setSent(true);
+      // toast.success("Message sent successfully! I'll get back to you soon.");
+      setTimeout(() => {
+        setSent(false);
+        setFormData({ name: "", email: "", message: "" });
+      }, 3000);
+    } catch (err: unknown) {
+      setSending(false);
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : "Failed to send message. Please try again later.",
+      );
+    }
   };
 
   return (
@@ -128,7 +149,7 @@ const ContactCard = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  placeholder="John Doe"
+                  placeholder="Write your name here..."
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
                 />
               </div>
@@ -144,7 +165,7 @@ const ContactCard = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="john@example.com"
+                  placeholder="Enter your email address..."
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
                 />
               </div>

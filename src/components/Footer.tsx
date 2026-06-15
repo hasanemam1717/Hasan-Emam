@@ -21,25 +21,23 @@ const quickLinks = [
 ];
 
 const services = [
-  { label: "Web Development", href: "/services" },
-  { label: "UI/UX Design", href: "/services" },
-  { label: "Mobile Apps", href: "/services" },
+  { label: "Full-Stack Development", href: "/services" },
   { label: "Consulting", href: "/services" },
 ];
 
 const socialLinks = [
-  { icon: FaGithub, href: "https://github.com/hasan-emam", label: "GitHub" },
+  { icon: FaGithub, href: "https://github.com/hasanemam1717", label: "GitHub" },
   {
     icon: FaLinkedin,
-    href: "https://linkedin.com/in/hasan-emam",
+    href: "https://www.linkedin.com/in/hasanemam/",
     label: "LinkedIn",
   },
   {
     icon: FaFacebook,
-    href: "https://facebook.com/hasan-emam",
+    href: "https://www.facebook.com/profile.php?id=61554502387596",
     label: "Facebook",
   },
-  { icon: FaTwitter, href: "https://twitter.com/hasan-emam", label: "Twitter" },
+  { icon: FaTwitter, href: "https://x.com/HasanEmam1717", label: "Twitter" },
 ];
 
 const Footer = () => {

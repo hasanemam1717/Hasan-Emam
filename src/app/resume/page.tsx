@@ -29,25 +29,23 @@ const sections = [
 // ── Resume Data ──
 const resumeData = {
   summary:
-    "Passionate full-stack web developer with 3+ years of experience building scalable, high-performance web applications. Proficient in React, Next.js, Node.js, TypeScript, and MongoDB. Strong problem-solving abilities and a commitment to writing clean, maintainable code that drives business growth.",
+    "Passionate full-stack web developer building scalable, high-performance web applications. Proficient in React, Next.js, Node.js, TypeScript, and MongoDB. Strong problem-solving abilities and a commitment to writing clean, maintainable code that drives business growth.",
   experience: [
     {
-      role: "Software Engineer",
-      company: "XYZ Corp.",
-      period: "Jan 2021 - Present",
-      location: "Remote",
+      role: "Academic Projects",
+      company: "University Coursework",
+      period: "2025 - 2026",
+      location: "Bogura, Bangladesh",
       points: [
-        "Developed and maintained scalable web applications using React, Next.js, and Node.js serving 10k+ daily users.",
-        "Architected RESTful APIs and GraphQL endpoints, reducing data fetch times by 40%.",
-        "Led a team of 3 junior developers, conducting code reviews and mentoring best practices.",
-        "Implemented CI/CD pipelines with GitHub Actions, cutting deployment time by 60%.",
-        "Optimized database queries and introduced caching strategies, improving page load speed by 35%.",
+        "Built responsive UI with React and Tailwind CSS for a student portal.",
+        "Integrated Google Maps API in a location-based project.",
+        "Improved accessibility and performance in coursework projects.",
       ],
     },
     {
-      role: "Frontend Developer",
-      company: "ABC Ltd.",
-      period: "Jun 2019 - Dec 2020",
+      role: "Academic Projects",
+      company: "University Projects",
+      period: "Jun 2024 - Dec 2024",
       location: "Bogura, Bangladesh",
       points: [
         "Built responsive, mobile-first user interfaces with React, TypeScript, and Tailwind CSS.",
@@ -61,13 +59,19 @@ const resumeData = {
     {
       degree: "BBA in Marketing",
       institution: "Govt. Azizul Haque College, Bogura",
-      period: "2024 - Present",
-      details: "1st Year Honours",
+      period: "2023 - Present",
+      details: "2nd Year Honours",
     },
     {
       degree: "Higher Secondary Certificate (HSC)",
       institution: "Ahmed Uddin Shah Shishu Niketan School & College",
-      period: "2022 - 2024",
+      period: "2021 - 2023",
+      details: "Arts Division",
+    },
+    {
+      degree: "Secondary School Certificate (SSC)",
+      institution: "Burail Model School & College",
+      period: "2019 - 2021",
       details: "Science Division",
     },
   ],
@@ -89,11 +93,11 @@ const resumeData = {
     },
     {
       category: "Database",
-      items: ["MongoDB", "PostgreSQL", "Redis", "Prisma", "Mongoose"],
+      items: ["MongoDB", "PostgreSQL", "Prisma", "Mongoose"],
     },
     {
       category: "DevOps & Tools",
-      items: ["Git", "Docker", "CI/CD", "Vercel", "Netlify", "AWS"],
+      items: ["Git", "Docker", "Vercel", "Netlify"],
     },
   ],
   certifications: [
@@ -107,7 +111,7 @@ const resumeData = {
   ],
   languages: [
     { name: "Bengali", level: "Native", proficiency: 100 },
-    { name: "English", level: "Professional Working", proficiency: 80 },
+    { name: "English", level: "Professional Working", proficiency: 70 },
     { name: "Hindi", level: "Conversational", proficiency: 60 },
   ],
 };
@@ -248,7 +252,7 @@ export default function Resume() {
               <div className="flex flex-wrap items-center gap-4 mt-4 text-white/50 text-sm">
                 <span className="flex items-center gap-1.5">
                   <FiMail size={14} />
-                  hasanimam0854@gmail.com
+                  hasanemam1717@gmail.com
                 </span>
                 <span className="flex items-center gap-1.5">
                   <FiPhone size={14} />

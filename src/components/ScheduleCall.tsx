@@ -11,6 +11,8 @@ import {
   HiPhone,
 } from "react-icons/hi";
 import { FiSend, FiUser, FiMessageSquare } from "react-icons/fi";
+import toast from "react-hot-toast";
+import { BiCopy } from "react-icons/bi";
 
 // ── Available time slots ──
 const TIME_SLOTS = [
@@ -122,18 +124,39 @@ export default function ScheduleCall() {
     e.preventDefault();
     setSubmitting(true);
 
-    // Simulate sending email/notification
-    await new Promise((r) => setTimeout(r, 1200));
+    try {
+      const res = await fetch("/api/schedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          date: selectedDate?.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          }),
+          time: selectedTime,
+        }),
+      });
 
-    // In a real app, you'd send this to an API:
-    // {
-    //   ...formData,
-    //   date: selectedDate?.toLocaleDateString(),
-    //   time: selectedTime,
-    // }
+      const data = await res.json();
 
-    setSubmitting(false);
-    setStep("confirmed");
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      toast.success("Call scheduled! Check your email for confirmation.");
+      setSubmitting(false);
+      setStep("confirmed");
+    } catch (err: unknown) {
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : "Failed to schedule call. Please try again.",
+      );
+      setSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -428,7 +451,7 @@ export default function ScheduleCall() {
                     value={formData.name}
                     onChange={handleFormChange}
                     required
-                    placeholder="John Doe"
+                    placeholder="Write your name here..."
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
                   />
                 </div>
@@ -443,7 +466,7 @@ export default function ScheduleCall() {
                     value={formData.email}
                     onChange={handleFormChange}
                     required
-                    placeholder="john@example.com"
+                    placeholder="Enter your email address..."
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
                   />
                 </div>
@@ -558,13 +581,13 @@ export default function ScheduleCall() {
                 >
                   Schedule Another
                 </button>
-                <a
+                {/* <a
                   href={`mailto:hasanimam0854@gmail.com?subject=Scheduling%20Call%20-%20${formattedDate}&body=Hi%20Hasan,%0A%0AI%20have%20scheduled%20a%20call%20with%20you.%0ADate:%20${formattedDate}%0ATime:%20${selectedTime}%0A%0AMessage:%20${formData.message}`}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg shadow-blue-600/25 hover:shadow-purple-600/30 transition-all text-sm font-bold"
                 >
                   <HiMail size={18} />
                   Send Email
-                </a>
+                </a> */}
               </div>
             </motion.div>
           )}
@@ -578,21 +601,35 @@ export default function ScheduleCall() {
           viewport={{ once: true }}
           className="mt-12 flex flex-wrap items-center justify-center gap-6 md:gap-10 text-sm text-white/50"
         >
-          <a
-            href="mailto:hasanimam0854@gmail.com"
-            className="flex items-center gap-2 hover:text-blue-400 transition-colors"
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText("hasanimam0854@gmail.com");
+              toast.success("Email copied to clipboard!");
+            }}
+            className="flex items-center gap-2 hover:text-blue-400 transition-colors cursor-pointer group"
           >
             <HiMail size={18} />
-            hasanimam0854@gmail.com
-          </a>
+            hasanemam1717@gmail.com
+            <BiCopy
+              size={15}
+              className="opacity-40 group-hover:opacity-100 transition-opacity"
+            />
+          </button>
           <span className="hidden md:inline w-px h-4 bg-white/10" />
-          <a
-            href="tel:01717680772"
-            className="flex items-center gap-2 hover:text-blue-400 transition-colors"
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText("01717680772");
+              toast.success("Phone number copied to clipboard!");
+            }}
+            className="flex items-center gap-2 hover:text-blue-400 transition-colors cursor-pointer group"
           >
             <HiPhone size={18} />
             01717680772
-          </a>
+            <BiCopy
+              size={15}
+              className="opacity-40 group-hover:opacity-100 transition-opacity"
+            />
+          </button>
         </motion.div>
       </div>
     </section>

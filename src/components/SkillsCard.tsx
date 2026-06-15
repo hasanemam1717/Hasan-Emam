@@ -1,8 +1,9 @@
 "use client";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import {
   SiHtml5,
+  SiCss3,
   SiTailwindcss,
   SiJavascript,
   SiTypescript,
@@ -21,61 +22,180 @@ import {
   SiGit,
   SiFirebase,
   SiGraphql,
+  SiPython,
+  SiFigma,
 } from "react-icons/si";
 
-const skillIcons = [
-  { icon: <SiHtml5 size={100} />, label: "HTML5", color: "text-orange-500" },
+interface Skill {
+  icon: React.ReactNode;
+  label: string;
+  color: string;
+  category: "frontend" | "backend" | "database" | "tools" | "other";
+}
+
+const skillIcons: Skill[] = [
+  // ── Frontend ──
+  {
+    icon: <SiHtml5 size={100} />,
+    label: "HTML5",
+    color: "text-orange-500",
+    category: "frontend",
+  },
+  {
+    icon: <SiCss3 size={100} />,
+    label: "CSS3",
+    color: "text-blue-500",
+    category: "frontend",
+  },
   {
     icon: <SiTailwindcss size={100} />,
     label: "Tailwind CSS",
     color: "text-cyan-400",
+    category: "frontend",
   },
   {
     icon: <SiJavascript size={100} />,
     label: "JavaScript",
     color: "text-yellow-400",
+    category: "frontend",
   },
   {
     icon: <SiTypescript size={100} />,
     label: "TypeScript",
     color: "text-blue-500",
+    category: "frontend",
   },
-  { icon: <SiReact size={100} />, label: "React", color: "text-sky-400" },
-  { icon: <SiNextdotjs size={100} />, label: "Next.js", color: "text-white" },
-  { icon: <SiRedux size={100} />, label: "Redux", color: "text-purple-500" },
+  {
+    icon: <SiReact size={100} />,
+    label: "React",
+    color: "text-sky-400",
+    category: "frontend",
+  },
+  {
+    icon: <SiNextdotjs size={100} />,
+    label: "Next.js",
+    color: "text-white",
+    category: "frontend",
+  },
+  {
+    icon: <SiRedux size={100} />,
+    label: "Redux",
+    color: "text-purple-500",
+    category: "frontend",
+  },
+  {
+    icon: <SiFigma size={100} />,
+    label: "Figma",
+    color: "text-pink-400",
+    category: "frontend",
+  },
+  // ── Backend ──
   {
     icon: <SiNodedotjs size={100} />,
     label: "Node.js",
     color: "text-green-600",
+    category: "backend",
   },
-  { icon: <SiExpress size={100} />, label: "Express", color: "text-white" },
+  {
+    icon: <SiExpress size={100} />,
+    label: "Express",
+    color: "text-white",
+    category: "backend",
+  },
   {
     icon: <SiAdonisjs size={100} />,
     label: "AdonisJS",
     color: "text-indigo-400",
+    category: "backend",
   },
-  { icon: <SiMongodb size={100} />, label: "MongoDB", color: "text-green-500" },
+  {
+    icon: <SiGraphql size={100} />,
+    label: "GraphQL",
+    color: "text-pink-500",
+    category: "backend",
+  },
+  {
+    icon: <SiPython size={100} />,
+    label: "Python",
+    color: "text-yellow-300",
+    category: "backend",
+  },
+  // ── Database ──
+  {
+    icon: <SiMongodb size={100} />,
+    label: "MongoDB",
+    color: "text-green-500",
+    category: "database",
+  },
   {
     icon: <SiPostgresql size={100} />,
     label: "PostgreSQL",
     color: "text-blue-400",
+    category: "database",
   },
-  { icon: <SiPrisma size={100} />, label: "Prisma", color: "text-gray-300" },
-  { icon: <SiMongoose size={100} />, label: "Mongoose", color: "text-red-500" },
-  { icon: <SiRedis size={100} />, label: "Redis", color: "text-red-600" },
-  { icon: <SiDocker size={100} />, label: "Docker", color: "text-blue-500" },
+  {
+    icon: <SiRedis size={100} />,
+    label: "Redis",
+    color: "text-red-600",
+    category: "database",
+  },
+  {
+    icon: <SiMongoose size={100} />,
+    label: "Mongoose",
+    color: "text-red-500",
+    category: "database",
+  },
+  {
+    icon: <SiPrisma size={100} />,
+    label: "Prisma",
+    color: "text-gray-300",
+    category: "database",
+  },
+  // ── Tools & DevOps ──
+  {
+    icon: <SiDocker size={100} />,
+    label: "Docker",
+    color: "text-blue-500",
+    category: "tools",
+  },
   {
     icon: <SiFirebase size={100} />,
     label: "Firebase",
     color: "text-yellow-500",
+    category: "tools",
   },
-  { icon: <SiGraphql size={100} />, label: "GraphQL", color: "text-pink-500" },
-  { icon: <SiGit size={100} />, label: "Git", color: "text-orange-600" },
+  {
+    icon: <SiGit size={100} />,
+    label: "Git",
+    color: "text-orange-600",
+    category: "tools",
+  },
 ];
 
+const categories = [
+  { id: "all", label: "All" },
+  { id: "frontend", label: "Frontend" },
+  { id: "backend", label: "Backend" },
+  { id: "database", label: "Database" },
+  { id: "tools", label: "Tools & DevOps" },
+] as const;
+
+const categoryGradients: Record<string, string> = {
+  frontend: "from-blue-500 to-cyan-500",
+  backend: "from-green-500 to-emerald-500",
+  database: "from-purple-500 to-pink-500",
+  tools: "from-orange-500 to-red-500",
+};
+
 const SkillsCard = () => {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
   const [isHovered, setIsHovered] = useState(false);
   const controls = useAnimation();
+
+  const filtered =
+    activeCategory === "all"
+      ? skillIcons
+      : skillIcons.filter((s) => s.category === activeCategory);
 
   return (
     <section className="relative bg-gradient-to-b from-[#000000] to-[#040f4a] py-16 md:py-24 overflow-hidden">
@@ -108,89 +228,135 @@ const SkillsCard = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-white/50 text-base max-w-xl mx-auto mb-10 md:mb-14"
+          className="text-white/50 text-base max-w-xl mx-auto mb-8"
         >
           A curated collection of tools and frameworks I work with daily to
           build modern, production-ready applications.
         </motion.p>
 
+        {/* ── Category Filter Tabs ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.25 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-2 mb-10"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                activeCategory === cat.id
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-600/25"
+                  : "bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/[0.08]"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </motion.div>
+
         {/* ── Desktop: Infinite Scrolling Carousel ── */}
-        <div className="hidden lg:block overflow-hidden relative">
-          <motion.div
-            className="flex gap-4"
-            animate={controls}
-            initial={{ x: "0%" }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            onHoverStart={() => {
-              setIsHovered(true);
-              controls.stop();
-            }}
-            onHoverEnd={() => {
-              setIsHovered(false);
-              controls.start({ x: ["0%", "-100%"] });
-            }}
-          >
-            {[...skillIcons, ...skillIcons, ...skillIcons].map(
-              (skill, index) => (
-                <motion.div
-                  key={index}
-                  className="relative flex flex-col items-center justify-center bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] p-6 rounded-2xl min-w-[160px] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group"
-                  animate={{
-                    y: [0, -12, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: (index % skillIcons.length) * 0.15,
-                  }}
-                >
-                  {/* Tooltip */}
-                  {isHovered && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: -8 }}
-                      className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/10 rounded-lg text-xs text-white whitespace-nowrap shadow-xl"
+        {activeCategory === "all" && (
+          <div className="hidden lg:block overflow-hidden relative">
+            <motion.div
+              className="flex gap-4"
+              animate={controls}
+              initial={{ x: "0%" }}
+              transition={{
+                duration: 30,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              onHoverStart={() => {
+                setIsHovered(true);
+                controls.stop();
+              }}
+              onHoverEnd={() => {
+                setIsHovered(false);
+                controls.start({ x: ["0%", "-100%"] });
+              }}
+            >
+              {[...skillIcons, ...skillIcons, ...skillIcons].map(
+                (skill, index) => (
+                  <motion.div
+                    key={index}
+                    className="relative flex flex-col items-center justify-center bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] p-6 rounded-2xl min-w-[160px] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group"
+                    animate={{
+                      y: [0, -12, 0],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: (index % skillIcons.length) * 0.15,
+                    }}
+                  >
+                    {isHovered && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: -8 }}
+                        className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/10 rounded-lg text-xs text-white whitespace-nowrap shadow-xl"
+                      >
+                        {skill.label}
+                      </motion.div>
+                    )}
+                    <div
+                      className={`${skill.color} transition-transform duration-300 group-hover:scale-110`}
                     >
+                      {skill.icon}
+                    </div>
+                    <h3 className="text-base text-white/70 font-medium mt-3 group-hover:text-white transition-colors">
                       {skill.label}
-                    </motion.div>
-                  )}
+                    </h3>
+                  </motion.div>
+                ),
+              )}
+            </motion.div>
+          </div>
+        )}
+
+        {/* ── Filtered Grid (Desktop & Mobile) ── */}
+        <div className={`${activeCategory === "all" ? "lg:hidden" : ""}`}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+            >
+              {filtered.map((skill, index) => (
+                <motion.div
+                  key={skill.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  transition={{ duration: 0.3, delay: index * 0.03 }}
+                  viewport={{ once: true }}
+                  className="flex flex-col items-center justify-center bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] p-5 rounded-xl hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group"
+                >
+                  {/* Category indicator dot */}
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full mb-2 bg-gradient-to-r ${
+                      categoryGradients[skill.category] ||
+                      "from-gray-500 to-gray-500"
+                    }`}
+                  />
                   <div
-                    className={`${skill.color} transition-transform duration-300 group-hover:scale-110`}
+                    className={`${skill.color} mb-2 transition-transform duration-300 group-hover:scale-110`}
                   >
                     {skill.icon}
                   </div>
-                  <h3 className="text-base text-white/70 font-medium mt-3 group-hover:text-white transition-colors">
+                  <h3 className="text-sm sm:text-base text-white/70 font-medium group-hover:text-white transition-colors">
                     {skill.label}
                   </h3>
                 </motion.div>
-              ),
-            )}
-          </motion.div>
-        </div>
-
-        {/* ── Mobile / Tablet: Responsive Grid ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:hidden gap-4">
-          {skillIcons.map((skill, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-center justify-center bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] p-5 rounded-xl hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
-            >
-              <div className={`${skill.color} mb-2`}>{skill.icon}</div>
-              <h3 className="text-sm sm:text-base text-white/70 font-medium">
-                {skill.label}
-              </h3>
+              ))}
             </motion.div>
-          ))}
+          </AnimatePresence>
         </div>
 
         {/* ── Bottom Stats Bar ── */}
@@ -209,7 +375,9 @@ const SkillsCard = () => {
           </div>
           <div className="w-px h-10 bg-white/10" />
           <div className="text-center">
-            <p className="text-2xl font-bold text-white">5</p>
+            <p className="text-2xl font-bold text-white">
+              {categories.length - 1}
+            </p>
             <p className="text-xs text-white/40 uppercase tracking-wider">
               Categories
             </p>
@@ -219,6 +387,13 @@ const SkillsCard = () => {
             <p className="text-2xl font-bold text-white">3+</p>
             <p className="text-xs text-white/40 uppercase tracking-wider">
               Years Exp.
+            </p>
+          </div>
+          <div className="w-px h-10 bg-white/10" />
+          <div className="text-center">
+            <p className="text-2xl font-bold text-white">100%</p>
+            <p className="text-xs text-white/40 uppercase tracking-wider">
+              Client Satisfaction
             </p>
           </div>
         </motion.div>

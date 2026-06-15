@@ -8,11 +8,12 @@
 </div>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-15.1-black?style=flat-square&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js" alt="Next.js" />
   <img src="https://img.shields.io/badge/React-19-blue?style=flat-square&logo=react" alt="React" />
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square&logo=framer" alt="Framer Motion" />
+  <img src="https://img.shields.io/badge/Nodemailer-9.0-22BCBA?style=flat-square&logo=nodemailer" alt="Nodemailer" />
 </p>
 
 ---
@@ -22,45 +23,45 @@
 - [Overview](#-overview)
 - [Tech Stack](#-tech-stack)
 - [Features](#-features)
-- [Project Structure](#-project-structure)
 - [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
 - [Available Scripts](#-available-scripts)
 - [Pages & Sections](#-pages--sections)
-- [Customization](#-customization)
+- [API Routes](#-api-routes)
+- [Project Structure](#-project-structure)
 - [Deployment](#-deployment)
-- [License](#-license)
 
 ---
 
 ## 🌟 Overview
 
-A full-featured portfolio website showcasing my work as a **Full-Stack Web Developer**. Built with performance, accessibility, and aesthetics in mind — featuring smooth animations, a case study section, blog, project showcase, and a fully themed dark/light mode.
+A full-featured portfolio website showcasing my work as a **Full-Stack Web Developer**. Built with performance, accessibility, and aesthetics in mind — featuring smooth animations, a project showcase, blog, contact form with real email delivery, scheduling system, and a downloadable PDF resume.
 
 ### ✨ Highlights
 
-- ⚡ **Blazing fast** — Built on Next.js 15 with App Router
-- 🌓 **Dark / Light mode** — Theme toggle with system preference detection
-- 🎬 **Smooth animations** — Framer Motion page transitions and scroll effects
-- 📱 **Fully responsive** — Mobile-first design that works on all devices
-- 📝 **Case Studies** — Deep dive into project challenges and results
-- 📰 **Blog** — Share your thoughts and tutorials
-- 📄 **Resume page** — Downloadable CV
-- 📞 **Schedule a Call** — Interactive date/time booking flow
+- ⚡ **Blazing fast** — Built on Next.js 16 with App Router
+- 🌓 **Dark mode** — Sleek dark theme with glassmorphism design
+- 🎬 **Smooth animations** — Framer Motion scroll effects and transitions
+- 📱 **Fully responsive** — Mobile-first design
+- 📧 **Live contact form** — Sends emails via Nodemailer (SMTP)
+- 📅 **Schedule a call** — Interactive calendar booking with email notifications
+- 📄 **PDF Resume** — Downloadable, professionally formatted resume with photo
+- 💬 **Telegram widget** — Quick chat with quick replies
 
 ---
 
 ## 🛠 Tech Stack
 
-| Category       | Technology                                                                 |
-| -------------- | -------------------------------------------------------------------------- |
-| **Framework**  | [Next.js 15](https://nextjs.org/) (App Router)                             |
-| **Language**   | [TypeScript](https://www.typescriptlang.org/)                              |
-| **Styling**    | [Tailwind CSS 3](https://tailwindcss.com/)                                 |
-| **Animation**  | [Framer Motion](https://www.framer.com/motion/)                            |
-| **Icons**      | [React Icons](https://react-icons.github.io/react-icons/) (Hi, Fi, Si, Fa) |
-| **Fonts**      | Geist (via `next/font`)                                                    |
-| **Data Fetch** | SWR                                                                        |
-| **PDF**        | react-to-pdf, react-to-print                                               |
+| Category      | Technology                                                |
+| ------------- | --------------------------------------------------------- |
+| **Framework** | [Next.js 16](https://nextjs.org/) (App Router)            |
+| **Language**  | [TypeScript](https://www.typescriptlang.org/)             |
+| **Styling**   | [Tailwind CSS 3](https://tailwindcss.com/)                |
+| **Animation** | [Framer Motion](https://www.framer.com/motion/)           |
+| **Icons**     | [React Icons](https://react-icons.github.io/react-icons/) |
+| **Email**     | [Nodemailer](https://nodemailer.com/) (SMTP)              |
+| **PDF**       | [jsPDF](https://github.com/parallax/jsPDF)                |
+| **Toast**     | [react-hot-toast](https://react-hot-toast.com/)           |
 
 ---
 
@@ -68,35 +69,213 @@ A full-featured portfolio website showcasing my work as a **Full-Stack Web Devel
 
 ### 🎨 UI / UX
 
-- **Dark & Light Mode** — Manual toggle with `localStorage` persistence and system preference fallback
-- **Glassmorphism Design** — Frosted glass cards with backdrop blur
-- **Gradient Accents** — Blue-to-purple gradient themes throughout
+- **Dark Theme** — Gradient backgrounds with glassmorphism cards
+- **Frosted Glass Cards** — Backdrop blur effects throughout
+- **Gradient Accents** — Blue-to-purple gradient themes
 - **Staggered Animations** — Scroll-triggered entrance animations
-- **Smooth Navigation** — Active link pill indicator with spring animation
+- **Floating Actions** — WhatsApp & Telegram quick-access buttons
+- **Scroll to Top** — Floating scroll-to-top button
+- **Copy to Clipboard** — One-click copy for email/phone
 
 ### 📄 Content Sections
 
-- **Hero** — Animated introduction with profile image, stats, and CTA buttons
-- **Projects** — Project cards with tech stack badges
-- **Skills** — Interactive skill cards with hover tooltips and progress indicators
-- **Case Studies** — Tab-based deep dives into project challenges, approach, and results
-- **Contact** — Two-column layout with benefits and contact form
-- **Schedule a Call** — Multi-step booking flow with calendar, time slots, and confirmation
+- **Hero** — Animated intro with profile image, social links, and stats
+- **Projects** — Grid of project cards with tech badges, links, and detail pages
+- **Skills** — Interactive skill cards (in SkillsCard component)
+- **Experience** — Timeline-based professional experience
+- **Testimonials** — Client/peer testimonials carousel
+- **Contact** — Two-column form with benefits + Nodemailer email delivery
+- **Schedule a Call** — Multi-step booking with calendar, time slots, and confirmation
 - **Blog** — Blog listing and individual post pages
-- **Resume** — Professional resume/CV page
+- **Resume** — Professional resume page with PDF download (includes photo, tech stack, projects, education)
 - **Services** — Services offerings page
+- **Case Studies** — Deep-dive project analysis
 
 ### ⚙️ Technical
 
-- Next.js 15 App Router (file-based routing)
+- Next.js 16 App Router (file-based routing)
 - Server Components + Client Components architecture
 - Responsive mobile-first design
-- Accessible navigation with ARIA labels
-- SEO metadata via `next/metadata`
+- REST API routes for contact & scheduling
+- SMTP email integration via Nodemailer
+- Toast notifications for form feedback
+- Dynamic PDF resume generation with jsPDF
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/hasanemam1717/my-portfolio-client.git
+cd my-portfolio-client
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your SMTP credentials
+
+# Run the development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# SMTP Configuration (Gmail, Outlook, SendGrid, etc.)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+
+# Where to receive contact form & schedule notifications
+CONTACT_EMAIL=your-email@gmail.com
+```
+
+> **For Gmail:** Enable 2FA, then generate an [App Password](https://support.google.com/accounts/answer/185833).
+
+---
+
+## 📜 Available Scripts
+
+| Script          | Description                       |
+| --------------- | --------------------------------- |
+| `npm run dev`   | Start development server on :3000 |
+| `npm run build` | Build for production              |
+| `npm start`     | Start production server           |
+| `npm run lint`  | Run ESLint                        |
+
+---
+
+## 🗺 Pages & Sections
+
+| Route            | Description                       |
+| ---------------- | --------------------------------- |
+| `/`              | Home page (Hero, Projects, etc.)  |
+| `/projects`      | All projects grid                 |
+| `/projects/[id]` | Individual project detail         |
+| `/blog`          | Blog listing                      |
+| `/blog/[id]`     | Individual blog post              |
+| `/resume`        | Professional resume with download |
+| `/contact`       | Contact form page                 |
+| `/services`      | Services offerings                |
+| `/call`          | Schedule a one-to-one call        |
+| `/admin`         | Admin panel                       |
+| `/login`         | Login page                        |
+
+---
+
+## 🌐 API Routes
+
+| Route           | Method | Description                     |
+| --------------- | ------ | ------------------------------- |
+| `/api/contact`  | POST   | Sends contact form email        |
+| `/api/schedule` | POST   | Sends call booking notification |
 
 ---
 
 ## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── contact/route.ts     # Contact form email API
+│   │   └── schedule/route.ts    # Call schedule email API
+│   ├── admin/page.tsx
+│   ├── blog/
+│   ├── call/page.tsx
+│   ├── contact/page.tsx
+│   ├── login/page.tsx
+│   ├── projects/
+│   ├── resume/
+│   │   ├── page.tsx             # Resume page
+│   │   └── resumeDownloader.tsx # PDF generator
+│   ├── services/page.tsx
+│   ├── globals.css
+│   ├── layout.tsx               # Root layout with Toaster
+│   ├── loading.tsx
+│   └── page.tsx                 # Home page
+├── assets/                      # Images & static assets
+├── components/
+│   ├── BlogCard.tsx
+│   ├── CaseStudies.tsx
+│   ├── Contact.tsx
+│   ├── ContactCard.tsx
+│   ├── Dropdown.tsx
+│   ├── Experience.tsx
+│   ├── FloatingActions.tsx      # WhatsApp/Telegram/Scroll-to-top
+│   ├── Footer.tsx
+│   ├── Hero.tsx
+│   ├── Navbar.tsx
+│   ├── ProjectCard.tsx
+│   ├── ProjectsBar.tsx
+│   ├── ScheduleCall.tsx
+│   ├── ScrollToTop.tsx
+│   ├── SkillsCard.tsx
+│   ├── Spinner.tsx
+│   ├── StatsCounter.tsx
+│   ├── TelegramWidget.tsx       # Telegram quick-chat widget
+│   ├── Testimonials.tsx
+│   └── ThemeProvider.tsx
+├── data/
+│   └── projects.ts              # Project data
+└── utils/
+    ├── getCurrentUser.ts
+    └── actions/registerUser.ts
+```
+
+---
+
+## 🚢 Deployment
+
+### Deploy to Vercel (Recommended)
+
+The easiest way to deploy:
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Set environment variables in Vercel dashboard:
+# SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS, CONTACT_EMAIL
+```
+
+Or connect your GitHub repo directly via [vercel.com/new](https://vercel.com/new).
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/hasanemam1717/my-portfolio-client)
+
+### Manual Build
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+<div align="center">
+  <p>Built with ❤️ by <strong>Hasan Emam</strong></p>
+</div>
 
 ```
 my-portfolio-client/

@@ -1,4 +1,6 @@
-import carProject from "../assets/car.png";
+import carProject from "../assets/searchbar.png";
+import carProject2 from "../assets/Screenshot from 2026-06-08 11-15-03.png";
+import portfolio from "../assets/Pasted image.png";
 import { StaticImageData } from "next/image";
 
 export interface Project {
@@ -24,8 +26,8 @@ export const projects: Project[] = [
     longDescription:
       "Built a full-featured digital marketplace with user authentication, product management, shopping cart, Stripe payment integration, and automated digital delivery. Features include admin dashboard, order tracking, and responsive design.",
     src: carProject,
-    link: "https://car-store-client-seven.vercel.app",
-    gitLink: "#",
+    link: "https://car-shop-client-pi.vercel.app/",
+    gitLink: "https://github.com/hasanemam1717/car-shop-client",
     devStack: [
       "MongoDB",
       "Express.js",
@@ -52,7 +54,7 @@ export const projects: Project[] = [
       "An interactive platform for online education with course management and student tracking.",
     longDescription:
       "Developed a comprehensive learning management system featuring video courses, progress tracking, quizzes, and certification. Instructors can create and manage content while students enjoy a seamless learning experience.",
-    src: carProject,
+    src: carProject2,
     link: "https://car-store-client-seven.vercel.app",
     gitLink: "#",
     devStack: [
@@ -81,9 +83,9 @@ export const projects: Project[] = [
       "A modern and responsive portfolio showcase built with Next.js and Tailwind CSS.",
     longDescription:
       "Designed and developed a personal portfolio website with smooth animations, dark/light mode, contact form, and blog integration. Built with performance and SEO best practices in mind.",
-    src: carProject,
-    link: "https://car-store-client-seven.vercel.app",
-    gitLink: "#",
+    src: portfolio,
+    link: "https://my-portfolio-client-cyan.vercel.app/",
+    gitLink: "https://github.com/hasanemam1717/my-portfolio-client",
     devStack: [
       "Next.js",
       "TypeScript",

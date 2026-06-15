@@ -2,11 +2,65 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { HiArrowRight, HiDownload } from "react-icons/hi";
-import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
-import tagImg from "../assets/Adobe Express - file (1).png";
-import htmlImg from "../assets/Adobe Express - file (2).png";
+import { FiGithub, FiLinkedin, FiMail, FiCode } from "react-icons/fi";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiNodedotjs,
+  SiTailwindcss,
+  SiPostgresql,
+  SiMongodb,
+} from "react-icons/si";
 import dp from "../assets/365949_copy-removebg-preview.png";
+
+// ── Typewriter hook ──
+function useTypewriter(
+  words: string[],
+  typingSpeed = 80,
+  deleteSpeed = 50,
+  pauseDuration = 2000,
+) {
+  const [text, setText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[wordIndex];
+    let timeout: NodeJS.Timeout;
+
+    if (!isDeleting && text === current) {
+      timeout = setTimeout(() => setIsDeleting(true), pauseDuration);
+    } else if (isDeleting && text === "") {
+      setIsDeleting(false);
+      setWordIndex((prev) => (prev + 1) % words.length);
+    } else {
+      timeout = setTimeout(
+        () => {
+          setText(
+            isDeleting
+              ? current.substring(0, text.length - 1)
+              : current.substring(0, text.length + 1),
+          );
+        },
+        isDeleting ? deleteSpeed : typingSpeed,
+      );
+    }
+    return () => clearTimeout(timeout);
+  }, [
+    text,
+    wordIndex,
+    isDeleting,
+    words,
+    typingSpeed,
+    deleteSpeed,
+    pauseDuration,
+  ]);
+
+  return text;
+}
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -21,46 +75,72 @@ const fadeItem = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
+// ── Floating particles ──
+const Particles = () => {
+  const particles = Array.from({ length: 30 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 4 + 1,
+    duration: Math.random() * 6 + 4,
+    delay: Math.random() * 4,
+  }));
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full bg-blue-400/20"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+          }}
+          animate={{
+            y: [0, -30, 0],
+            opacity: [0.2, 0.6, 0.2],
+          }}
+          transition={{
+            duration: p.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: p.delay,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// ── Tech Marquee ──
+const techIcons = [
+  { icon: SiReact, label: "React", color: "text-sky-400" },
+  { icon: SiNextdotjs, label: "Next.js", color: "text-white" },
+  { icon: SiTypescript, label: "TypeScript", color: "text-blue-500" },
+  { icon: SiNodedotjs, label: "Node.js", color: "text-green-600" },
+  { icon: SiTailwindcss, label: "Tailwind", color: "text-cyan-400" },
+  { icon: SiPostgresql, label: "PostgreSQL", color: "text-blue-700" },
+  { icon: SiMongodb, label: "MongoDB", color: "text-green-500" },
+];
+
 const Hero = () => {
+  const typedText = useTypewriter([
+    "Full-Stack Developer",
+    "UI/UX Enthusiast",
+    "Open Source Contributor",
+    "Tech Innovator",
+  ]);
+
   return (
     <section className="relative min-h-screen bg-gradient-to-b from-[#000000] via-[#020a3a] to-[#040f4a] overflow-hidden flex items-center">
+      {/* ── Particles Background ── */}
+      <Particles />
+
       {/* ── Ambient Background Glows ── */}
-      <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[140px] pointer-events-none" />
+      <div className="absolute top-[10%] left-[5%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[5%] w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[140px] pointer-events-none" />
       <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-indigo-500/5 blur-[120px] pointer-events-none" />
-
-      {/* ── Floating Decorative Elements ── */}
-      <motion.div
-        className="absolute hidden lg:block left-[8%] top-[18%]"
-        animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Image
-          src={tagImg}
-          width="100"
-          height="100"
-          alt="tag"
-          draggable="false"
-        />
-      </motion.div>
-      <motion.div
-        className="absolute hidden lg:block right-[10%] top-[12%]"
-        animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1,
-        }}
-      >
-        <Image
-          src={htmlImg}
-          width="90"
-          height="90"
-          alt="html"
-          draggable="false"
-        />
-      </motion.div>
 
       {/* ── Grid Dots Pattern Overlay ── */}
       <div
@@ -90,24 +170,21 @@ const Hero = () => {
               Available for freelance work
             </motion.div>
 
-            {/* Role */}
-            <motion.p
-              variants={fadeItem}
-              className="text-blue-400 font-semibold tracking-widest uppercase text-sm mb-2"
-            >
-              Full-Stack Web Developer
-            </motion.p>
-
-            {/* Main Heading */}
-            <motion.h1
-              variants={fadeItem}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white leading-[1.1]"
-            >
-              Hi, I&apos;m{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-                Hasan Emam
-              </span>
-            </motion.h1>
+            {/* Main Heading with Typewriter */}
+            <motion.div variants={fadeItem}>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white leading-[1.1]">
+                Hi, I&apos;m{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                  Hasan Emam
+                </span>
+              </h1>
+              <div className="mt-3 h-14 md:h-16 flex items-center justify-center lg:justify-start">
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white/80">
+                  {typedText}
+                  <span className="ml-1 inline-block w-[3px] h-[1em] bg-blue-400 animate-pulse" />
+                </span>
+              </div>
+            </motion.div>
 
             {/* Subtitle */}
             <motion.p
@@ -150,15 +227,19 @@ const Hero = () => {
               </span>
               <span className="w-8 h-px bg-white/20" />
               {[
-                { icon: <FiGithub size={20} />, href: "#", label: "GitHub" },
+                {
+                  icon: <FiGithub size={20} />,
+                  href: "https://github.com/hasanemam1717",
+                  label: "GitHub",
+                },
                 {
                   icon: <FiLinkedin size={20} />,
-                  href: "#",
+                  href: "https://www.linkedin.com/in/hasanemam",
                   label: "LinkedIn",
                 },
                 {
                   icon: <FiMail size={20} />,
-                  href: "mailto:hasan@example.com",
+                  href: "mailto:hasanemam1717@gmail.com",
                   label: "Email",
                 },
               ].map(({ icon, href, label }) => (
@@ -172,6 +253,32 @@ const Hero = () => {
                 </a>
               ))}
             </motion.div>
+
+            {/* Tech Stack Marquee */}
+            <motion.div
+              variants={fadeItem}
+              className="mt-10 hidden lg:flex items-center gap-3 text-white/30 text-xs tracking-wider uppercase"
+            >
+              <FiCode size={14} />
+              <span className="w-6 h-px bg-white/10" />
+              <span className="font-medium">Tech stack I work with</span>
+              <span className="w-6 h-px bg-white/10" />
+              <div className="flex items-center gap-3 ml-2">
+                {techIcons.map(({ icon: Icon, label, color }) => (
+                  <div
+                    key={label}
+                    className="group relative flex items-center gap-1.5"
+                  >
+                    <Icon
+                      className={`${color} text-lg transition-transform group-hover:scale-125`}
+                    />
+                    <span className="text-[10px] text-white/40 group-hover:text-white/70 transition-colors">
+                      {label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* ── Right Content: Profile Image ── */}
@@ -183,20 +290,30 @@ const Hero = () => {
               {/* Glow behind image */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/30 to-purple-500/30 blur-[60px] scale-150" />
 
-              {/* Profile photo with decorative border */}
-              <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-2 border-white/10 shadow-2xl shadow-blue-500/20">
-                <Image
-                  src={dp}
-                  alt="Hasan Emam"
-                  fill
-                  className="object-contain scale-110"
-                  priority
-                />
+              {/* Profile photo with rotating gradient border */}
+              <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  style={{ padding: "3px" }}
+                >
+                  <div className="w-full h-full rounded-full bg-[#000]" />
+                </motion.div>
+                <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-transparent">
+                  <Image
+                    src={dp}
+                    alt="Hasan Emam"
+                    fill
+                    className="object-contain scale-110"
+                    priority
+                  />
+                </div>
               </div>
 
               {/* Floating badge: 3+ Years */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
+                animate={{ y: [0, -10, 0] }}
                 transition={{
                   duration: 4,
                   repeat: Infinity,
@@ -204,7 +321,7 @@ const Hero = () => {
                 }}
                 className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl px-4 py-3 text-center shadow-xl"
               >
-                <p className="text-2xl font-bold text-white">3+</p>
+                <p className="text-2xl font-bold text-white">1+</p>
                 <p className="text-[10px] text-white/60 uppercase tracking-wider">
                   Years Exp.
                 </p>
@@ -212,7 +329,7 @@ const Hero = () => {
 
               {/* Floating badge: Projects */}
               <motion.div
-                animate={{ y: [0, 8, 0] }}
+                animate={{ y: [0, 10, 0] }}
                 transition={{
                   duration: 4.5,
                   repeat: Infinity,
@@ -221,7 +338,7 @@ const Hero = () => {
                 }}
                 className="absolute -left-2 top-8 sm:-left-4 sm:top-12 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl px-4 py-3 text-center shadow-xl"
               >
-                <p className="text-2xl font-bold text-white">20+</p>
+                <p className="text-2xl font-bold text-white">5+</p>
                 <p className="text-[10px] text-white/60 uppercase tracking-wider">
                   Projects
                 </p>

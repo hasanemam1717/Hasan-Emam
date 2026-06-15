@@ -6,7 +6,7 @@ import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
 import { HiArrowUp, HiX, HiChat, HiChevronRight } from "react-icons/hi";
 
 const PHONE_NUMBER = "8801717680772";
-const TELEGRAM_USERNAME = "hasanemam1717gmail";
+const TELEGRAM_USERNAME = "hasanemam1717";
 
 const quickReplies = [
   {

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { HiX, HiChat, HiChevronRight } from "react-icons/hi";
 
-const TELEGRAM_USERNAME = "hasanemam1717gmail"; // Your Telegram username
+const TELEGRAM_USERNAME = "@hasanemam1717gmail"; // Your Telegram username
 const TELEGRAM_LINK = `https://t.me/${TELEGRAM_USERNAME}`;
 const TELEGRAM_MESSAGE = "Hi Hasan! I'd like to chat with you about...";
 
