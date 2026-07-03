@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
+import FloatingShapes from "@/components/FloatingShapes";
 import {
   HiStar,
   HiChevronLeft,
@@ -106,6 +107,9 @@ const Testimonials = () => {
       {/* Ambient glows */}
       <div className="absolute top-1/3 left-[10%] w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/3 right-[10%] w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-[140px] pointer-events-none" />
+
+      {/* ── Floating Illustrations ── */}
+      <FloatingShapes count={10} speed="slow" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── Section Header ── */}

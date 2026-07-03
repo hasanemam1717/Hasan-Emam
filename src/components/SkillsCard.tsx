@@ -1,6 +1,7 @@
 "use client";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import FloatingShapes from "@/components/FloatingShapes";
 import {
   SiHtml5,
   SiCss3,
@@ -187,6 +188,155 @@ const categoryGradients: Record<string, string> = {
   tools: "from-orange-500 to-red-500",
 };
 
+// ── Background Illustrations ──
+function SkillsBackgroundArt() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Grid dot pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+          backgroundSize: "50px 50px",
+        }}
+      />
+
+      {/* Concentric tech rings */}
+      {[0, 1, 2].map((ring) => (
+        <motion.div
+          key={`ring-${ring}`}
+          className="absolute left-1/2 -translate-x-1/2 rounded-full border"
+          style={{
+            width: 80 + ring * 90,
+            height: 80 + ring * 90,
+            top: `${40 + ring * 12}%`,
+            borderColor:
+              ring % 2 === 0
+                ? "rgba(96,165,250,0.07)"
+                : "rgba(192,132,252,0.05)",
+            borderStyle: "dashed",
+            borderWidth: "1px",
+          }}
+          animate={{ rotate: [0, 360] }}
+          transition={{
+            duration: 25 + ring * 15,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      ))}
+
+      {/* Floating tech dots */}
+      {Array.from({ length: 12 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute"
+          style={{
+            left: `${6 + ((i * 21 + 9) % 88)}%`,
+            top: `${5 + ((i * 15 + 3) % 90)}%`,
+          }}
+        >
+          <motion.div
+            className={`w-1.5 h-1.5 rounded-full ${
+              i % 3 === 0
+                ? "bg-blue-400/25"
+                : i % 3 === 1
+                  ? "bg-purple-400/20"
+                  : "bg-cyan-400/20"
+            }`}
+            animate={{ opacity: [0.1, 0.45, 0.1], scale: [1, 1.5, 1] }}
+            transition={{
+              duration: 2.5 + (i % 3),
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+      ))}
+
+      {/* Dashed connection arcs */}
+      <svg
+        className="absolute top-0 left-0 w-full h-full opacity-[0.03]"
+        viewBox="0 0 1200 800"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M 100 200 Q 400 100 600 250 T 1100 200"
+          stroke="rgba(96,165,250,0.3)"
+          strokeWidth="0.6"
+          strokeDasharray="4 6"
+          fill="none"
+        />
+        <path
+          d="M 150 450 Q 350 350 600 500 T 1050 450"
+          stroke="rgba(192,132,252,0.25)"
+          strokeWidth="0.6"
+          strokeDasharray="4 6"
+          fill="none"
+        />
+        <path
+          d="M 200 700 Q 500 600 700 700 T 1000 680"
+          stroke="rgba(96,165,250,0.15)"
+          strokeWidth="0.5"
+          strokeDasharray="4 6"
+          fill="none"
+        />
+      </svg>
+
+      {/* Small floating sparkle crosses */}
+      {Array.from({ length: 5 }).map((_, i) => (
+        <motion.div
+          key={`sp-${i}`}
+          className="absolute"
+          style={{
+            left: `${20 + ((i * 29 + 7) % 60)}%`,
+            top: `${15 + ((i * 19 + 11) % 70)}%`,
+          }}
+        >
+          <motion.div
+            animate={{
+              y: [0, -6, 0],
+              rotate: [0, 180, 360],
+              opacity: [0.15, 0.45, 0.15],
+            }}
+            transition={{
+              duration: 4 + (i % 3),
+              repeat: Infinity,
+              delay: i * 0.5,
+              ease: "easeInOut",
+            }}
+          >
+            <svg width="8" height="8" viewBox="0 0 8 8" className="opacity-35">
+              <line
+                x1="4"
+                y1="0"
+                x2="4"
+                y2="8"
+                stroke={
+                  i % 2 === 0 ? "rgba(96,165,250,0.5)" : "rgba(192,132,252,0.4)"
+                }
+                strokeWidth="0.6"
+              />
+              <line
+                x1="0"
+                y1="4"
+                x2="8"
+                y2="4"
+                stroke={
+                  i % 2 === 0 ? "rgba(96,165,250,0.5)" : "rgba(192,132,252,0.4)"
+                }
+                strokeWidth="0.6"
+              />
+            </svg>
+          </motion.div>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 const SkillsCard = () => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [isHovered, setIsHovered] = useState(false);
@@ -202,6 +352,12 @@ const SkillsCard = () => {
       {/* Ambient glows */}
       <div className="absolute top-1/4 left-0 w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-[140px] pointer-events-none" />
+
+      {/* ── Background Illustration ── */}
+      <SkillsBackgroundArt />
+
+      {/* ── Floating Illustrations ── */}
+      <FloatingShapes count={10} speed="slow" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Heading */}

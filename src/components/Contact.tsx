@@ -11,6 +11,7 @@ import {
   HiUserGroup,
 } from "react-icons/hi";
 import { FiSend, FiUser, FiMessageSquare } from "react-icons/fi";
+import FloatingShapes from "@/components/FloatingShapes";
 import toast from "react-hot-toast";
 
 const benefits = [
@@ -91,6 +92,9 @@ const Contact = () => {
       {/* Ambient glows */}
       <div className="absolute top-1/3 left-[10%] w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/3 right-[10%] w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-[140px] pointer-events-none" />
+
+      {/* ── Floating Illustrations ── */}
+      <FloatingShapes count={10} speed="slow" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── Section Header ── */}

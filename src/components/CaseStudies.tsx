@@ -22,6 +22,7 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import { projects, type Project } from "@/data/projects";
+import FloatingShapes from "@/components/FloatingShapes";
 
 // ── Extended case study data per project ──
 interface CaseStudy extends Project {
@@ -128,6 +129,9 @@ export default function CaseStudies() {
       {/* Ambient glows */}
       <div className="absolute top-1/3 left-[8%] w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/3 right-[8%] w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-[140px] pointer-events-none" />
+
+      {/* ── Floating Illustrations ── */}
+      <FloatingShapes count={12} speed="slow" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── Section Header ── */}
